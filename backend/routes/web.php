@@ -24,13 +24,15 @@ Route::get('/', function () {
 Route::post('/task', function (Request $request) {
    request()->validate(
        [
-           'name' => 'required|unique:tasks|min:3|max:255'
+           'name' => 'required|unique:tasks|min:3|max:255',
+           'deadline' => 'required'
        ],
        [
            'name.required' => 'タスク内容を入力してください。',
            'name.unique' => 'そのタスクは既に追加されています。',
            'name.min' => '3文字以上で入力してください。',
-           'name.max' => '255文字以内で入力してください。'
+           'name.max' => '255文字以内で入力してください。',
+           'deadline.required' => '締め切りを入力してください。'
        ]
    );
    $task = new Task();
