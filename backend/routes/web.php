@@ -17,7 +17,8 @@ use Illuminate\Http\Request;
 
 Route::get('/', function () {
    return view('tasks', [
-       'tasks' => App\Models\Task::latest()->get()
+       'tasks' => App\Models\Task::latest()->get(),
+       'current_time' => new DateTime()
    ]);
 });
 

@@ -46,8 +46,10 @@
                  <th></th> <!-- 削除ボタン -->
                 </tr>
            @foreach ($tasks as $task)
-           <tr>
-             <td>{{ $task->name }}</td>
+           <!-- {{ $date_diff = intval($current_time->diff(new DateTime($task->deadline))->format('%R%a')) }} -->
+           <!-- {{ $deadline_state = 0 > $date_diff ? 'danger' : ( 3 > $date_diff ? 'warning' : '' ) }} -->
+           <tr class="{{ $deadline_state === 'danger' ? 'table-danger' :  ( $deadline_state === 'warning' ? 'table-warning' : '' ) }}">
+            <td>{{ $task->name }}</td>
              <td>{{ $task->deadline }}</td>
              <td>{{ $task->created_at }}</td>
 
