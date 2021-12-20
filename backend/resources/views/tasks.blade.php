@@ -16,10 +16,13 @@
        <form method="POST" action="{{ url('/task') }}">
          @csrf
          <div class="form-group">
+           <p>タスク名</p>
            <input type="text" name="name" class="form-control">
            @if ($errors->has('name'))
            <p class="text-danger">{{ $errors->first('name') }}</p>
            @endif
+           <p>締切</p>
+           <input type="date" name="deadline" class="form-control">
            <button type="submit" class="btn btn-outline-info mt-2"><i class="fas fa-plus fa-lg mr-2"></i>追加</button>
          </div>
        </form>
@@ -31,9 +34,18 @@
        @if (count($tasks) > 0)
        <table class="table table-striped">
          <tbody>
+             <tr>
+                 <th>タスク名</th>
+                 <th>締め切り</th>
+                 <th>作成日時</th>
+                 <th></th> <!-- 削除ボタン -->
+                </tr>
            @foreach ($tasks as $task)
            <tr>
              <td>{{ $task->name }}</td>
+             <td>{{ $task->deadline }}</td>
+             <td>{{ $task->created_at }}</td>
+
              <td>
                <form method="POST" action="{{ url('/task/' . $task->id) }}">
                  @csrf
