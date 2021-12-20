@@ -66,13 +66,17 @@
        </table>
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
-                <li class="page-item"><a class="page-link" href="{{ $tasks->previousPageUrl() }}">Previous</a></li>
+                <li class="page-item {{ !$tasks->hasPages() ? 'disabled' : '' }}">
+                    <a class="page-link" href="{{ $tasks->previousPageUrl() }}" {{ !$tasks->hasPages() ? 'tabindex="-1" aria-disabled="true"' : ''}}>Previous</a>
+                </li>
                 @for ( $page_num = 1 ; $tasks->lastPage() >= $page_num ; $page_num++)
                     <li class="page-item {{ $tasks->currentPage() === $page_num ? 'active' : '' }}">
                         <a class="page-link" href="{{ $tasks->url($page_num) }}">{{ $page_num }}</a>
                     </li>
                 @endfor
-                <li class="page-item"><a class="page-link" href="{{ $tasks->nextPageUrl() }}">Next</a></li>
+                <li class="page-item {{ !$tasks->hasPages() ? 'disabled' : '' }}">
+                    <a class="page-link" href="{{ $tasks->nextPageUrl() }}" {{ !$tasks->hasPages() ? 'tabindex="-1" aria-disabled="true"' : ''}}>Next</a>
+                </li>
             </ul>
         </nav>
        @endif
