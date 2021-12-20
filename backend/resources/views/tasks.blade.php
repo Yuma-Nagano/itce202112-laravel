@@ -21,8 +21,13 @@
            @if ($errors->has('name'))
            <p class="text-danger">{{ $errors->first('name') }}</p>
            @endif
+
            <p>締切</p>
            <input type="date" name="deadline" class="form-control">
+           @if ($errors->has('deadline'))
+           <p class="text-danger">{{ $errors->first('deadline') }}</p>
+           @endif
+
            <button type="submit" class="btn btn-outline-info mt-2"><i class="fas fa-plus fa-lg mr-2"></i>追加</button>
          </div>
        </form>
