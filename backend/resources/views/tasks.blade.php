@@ -37,7 +37,7 @@
      <div class="card-header">タスク一覧</div>
      <div class="card-body">
        @if (count($tasks) > 0)
-       <table class="table table-striped">
+       <table class="table">
          <tbody>
              <tr>
                  <th>タスクの状態</th>
