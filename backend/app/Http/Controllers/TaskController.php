@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Task;
 use Datetime;
+use Illuminate\Http\Request;
+
 
 class TaskController extends Controller
 {
@@ -15,4 +17,34 @@ class TaskController extends Controller
             'current_time' => new DateTime()
         ]);
     }
+
+    public function create(Request $request)
+    {
+        request()->validate(
+            [
+                'name' => 'required|unique:tasks|min:3|max:255',
+                'deadline' => 'required'
+            ],
+            [
+                'name.required' => 'タスク内容を入力してください。',
+                'name.unique' => 'そのタスクは既に追加されています。',
+                'name.min' => '3文字以上で入力してください。',
+                'name.max' => '255文字以内で入力してください。',
+                'deadline.required' => '締め切りを入力してください。'
+            ]
+        );
+        $task = new Task();
+        $task->name = request('name');
+        $task->deadline = request('deadline');
+        $task->is_completed = false;
+        $task->save();
+        return redirect('/');
+    }
+
+    public function delete($id) {
+        $task = new Task();
+        $task->where('id', $id)->delete();
+        return redirect('/');
+    }
+
 }
