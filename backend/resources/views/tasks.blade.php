@@ -41,10 +41,10 @@
          <tbody>
              <tr>
                  <th>タスクの状態</th>
+                 <th>完了状態変更</th> <!-- ボタン -->
                  <th>タスク名</th>
                  <th>締め切り</th>
                  <th>作成日時</th>
-                 <th></th> <!-- 完了ボタン -->
                  <th></th> <!-- 削除ボタン -->
                 </tr>
            @foreach ($tasks as $task)
@@ -52,14 +52,20 @@
            <!-- {{ $deadline_state = 0 > $date_diff ? 'danger' : ( 3 > $date_diff ? 'warning' : '' ) }} -->
            <tr class="{{ $deadline_state === 'danger' ? 'table-danger' :  ( $deadline_state === 'warning' ? 'table-warning' : '' ) }}">
             <td>{{ $task->is_completed ? '完了' : '未完了' }}</td>
+            <td>
+                <form method="POST" action="{{ url('/complete/' . $task->id) }}">
+                @csrf
+                @if(!$task->is_completed)
+                    <button type="submit" class="btn btn-success w-75">完了に変更</button>
+                @else
+                    <button type="submit" class="btn btn-secondary w-75">未完了に変更</button>
+                @endif
+                </form>
+            </td>
             <td>{{ $task->name }}</td>
             <td>{{ $task->deadline }}</td>
             <td>{{ $task->created_at }}</td>
-            <td>
-                @if(!$task->is_completed)
-                    <button class="btn btn-success">完了</button>
-                @endif
-            </td>
+
              <td>
                <form method="POST" action="{{ url('/task/' . $task->id) }}">
                  @csrf

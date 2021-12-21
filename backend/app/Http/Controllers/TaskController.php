@@ -43,7 +43,18 @@ class TaskController extends Controller
 
     public function delete($id) {
         $task = new Task();
-        $task->where('id', $id)->delete();
+        $task->find($id)->delete();
+        return redirect('/');
+    }
+
+    public function toggleTaskCompletion($id){
+        $tasks = new Task();
+        $task = $tasks->find($id);
+        if($task->is_completed){
+            $task->update(['is_completed' => false]);
+        }else{
+            $task->update(['is_completed' => true]);
+        }
         return redirect('/');
     }
 
