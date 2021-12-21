@@ -40,19 +40,26 @@
        <table class="table table-striped">
          <tbody>
              <tr>
+                 <th>タスクの状態</th>
                  <th>タスク名</th>
                  <th>締め切り</th>
                  <th>作成日時</th>
+                 <th></th> <!-- 完了ボタン -->
                  <th></th> <!-- 削除ボタン -->
                 </tr>
            @foreach ($tasks as $task)
            <!-- {{ $date_diff = intval($current_time->diff(new DateTime($task->deadline))->format('%R%a')) }} -->
            <!-- {{ $deadline_state = 0 > $date_diff ? 'danger' : ( 3 > $date_diff ? 'warning' : '' ) }} -->
            <tr class="{{ $deadline_state === 'danger' ? 'table-danger' :  ( $deadline_state === 'warning' ? 'table-warning' : '' ) }}">
+            <td>{{ $task->is_completed ? '完了' : '未完了' }}</td>
             <td>{{ $task->name }}</td>
-             <td>{{ $task->deadline }}</td>
-             <td>{{ $task->created_at }}</td>
-
+            <td>{{ $task->deadline }}</td>
+            <td>{{ $task->created_at }}</td>
+            <td>
+                @if(!$task->is_completed)
+                    <button class="btn btn-success">完了</button>
+                @endif
+            </td>
              <td>
                <form method="POST" action="{{ url('/task/' . $task->id) }}">
                  @csrf
