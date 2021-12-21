@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Models\Task;
 use Illuminate\Http\Request;
+use App\Http\Controllers\TaskController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,12 +16,7 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/', function () {
-    return view('tasks', [
-       'tasks' => Task::paginate(10),
-       'current_time' => new DateTime(),
-   ]);
-});
+Route::get('/', [TaskController::class, 'index']);
 
 Route::post('/task', function (Request $request) {
    request()->validate(
