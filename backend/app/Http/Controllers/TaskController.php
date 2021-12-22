@@ -44,8 +44,8 @@ class TaskController extends Controller
     public function search(Request $request) {
         $task = new Task();
         $searched_task = $task->where([
-            ['deadline', '>=', $request->input('startDeadline')],
-            ['deadline', '<=', $request->input('endDeadline')]
+            ['deadline', '>=', $request->startDeadline],
+            ['deadline', '<=', $request->endDeadline]
         ]);
         return view('tasks', [
             'tasks' => $searched_task->paginate(10),

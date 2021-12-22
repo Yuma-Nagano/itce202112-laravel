@@ -18,13 +18,13 @@
          @csrf
          <div class="form-group">
            <p>タスク名</p>
-           <input type="text" name="name" class="form-control">
+           <input type="text" name="name" class="form-control"  value="{{ old('name') }}">
            @if ($errors->has('name'))
            <p class="text-danger">{{ $errors->first('name') }}</p>
            @endif
 
            <p>締切</p>
-           <input type="date" name="deadline" class="form-control">
+           <input type="date" name="deadline" class="form-control"  value="{{ old('deadline') }}">
            @if ($errors->has('deadline'))
            <p class="text-danger">{{ $errors->first('deadline') }}</p>
            @endif
@@ -35,17 +35,33 @@
      </div>
    </div>
 
-    <div class="card">
+    <div class="card mb-3">
         <div class="card-header">検索</div>
         <div class="card-body">
             <form method="get" action="{{ url('/task') }}">
                 @csrf
                 <div class="form-group">
-                        <label class="form-label" for="startDeadline">締め切り</label>
+                        <div class="form-check form-check-inline">
+                            <input type="checkbox" class="form-check-input" id="notCompleted" name="notCompleted" value="notCompleted" checked>
+                            <label class="form-check-label" for="notCompleted">未完了</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input type="checkbox" class="form-check-input" id="completed" name="completed" value="completed">
+                            <label class="form-check-label" for="completed">完了</label>
+                        </div>
+
                         <div>
-                            <input type="datetime-local" class="form-control search-period" id="startDeadline" name="startDeadline">
+                            <label class="form-label" for="startDeadline">締め切り</label>
+                            <input type="datetime-local" class="form-control" id="startDeadline" name="startDeadline">
                             <span>~</span>
-                            <input type="datetime-local" class="form-control search-period" id="endDeadline" name="endDeadline">
+                            <input type="datetime-local" class="form-control" id="endDeadline" name="endDeadline">
+                        </div>
+
+                        <div>
+                            <label class="form-label" for="startCreateDate">作成日時</label>
+                            <input type="datetime-local" class="form-control" id="startCreateDate" name="startCreateDate">
+                            <span>~</span>
+                            <input type="datetime-local" class="form-control" id="endCreateDate" name="endCreateDate">
                         </div>
 
                     <button type="submit" class="btn btn-primary mt-2">検索</button>
