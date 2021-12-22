@@ -33,6 +33,21 @@
        </form>
      </div>
    </div>
+
+    <div class="card">
+        <div class="card-header">タスク一覧</div>
+        <div class="card-body row">
+            <form method="GET" action="{{ url('/task') }}">
+                @csrf
+                <div class="form-group">
+                    <label class="form-label" for=""></label>
+                    <input type="datetime-local" class="form-control" id="startDeadline">
+                    <button type="submit" class="btn btn-primary">検索</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
    <div class="card">
      <div class="card-header">タスク一覧</div>
      <div class="card-body">
