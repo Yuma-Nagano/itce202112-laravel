@@ -42,7 +42,7 @@
                 @csrf
                 <div class="form-group">
                         <label class="form-label" for="startDeadline">締め切り</label>
-                        <div class="flex-container">
+                        <div>
                             <input type="datetime-local" class="form-control search-period mr-1" id="startDeadline">
                             <span>~</span>
                             <input type="datetime-local" class="form-control search-period ml-1" id="endDeadline">
