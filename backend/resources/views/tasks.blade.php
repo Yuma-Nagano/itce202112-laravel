@@ -6,6 +6,7 @@
  <title>Basic Tasks</title>
  <!-- <link type="text/css" rel="stylesheet" href="{{ asset('css/app.css') }}"> -->
  <link type="text/css" rel="stylesheet" href="{{ mix('css/app.css') }}">
+ <link type="text/css" rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
 <body>
  <div class="container">
@@ -35,14 +36,19 @@
    </div>
 
     <div class="card">
-        <div class="card-header">タスク一覧</div>
-        <div class="card-body row">
+        <div class="card-header">検索</div>
+        <div class="card-body">
             <form method="GET" action="{{ url('/task') }}">
                 @csrf
                 <div class="form-group">
-                    <label class="form-label" for=""></label>
-                    <input type="datetime-local" class="form-control" id="startDeadline">
-                    <button type="submit" class="btn btn-primary">検索</button>
+                        <label class="form-label" for="startDeadline">締め切り</label>
+                        <div class="flex-container">
+                            <input type="datetime-local" class="form-control search-period mr-1" id="startDeadline">
+                            <span>~</span>
+                            <input type="datetime-local" class="form-control search-period ml-1" id="endDeadline">
+                        </div>
+
+                    <button type="submit" class="btn btn-primary mt-2">検索</button>
                 </div>
             </form>
         </div>
