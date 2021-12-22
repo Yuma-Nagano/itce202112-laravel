@@ -42,7 +42,17 @@ class TaskController extends Controller
     }
 
     public function search(Request $request) {
-        return redirect('/');
+        $task = new Task();
+        var_dump($task->find(2)->deadline);
+        var_dump($request->all());
+        $searched_task = $task->where([
+            ['deadline', '>=', $request->input('startDeadline')],
+            ['deadline', '<=', $request->input('endDeadline')]
+        ])->paginate(10);
+        return view('tasks', [
+            'tasks' => $searched_task,
+            'current_time' => new DateTime()
+        ]);
     }
 
     public function delete($id) {

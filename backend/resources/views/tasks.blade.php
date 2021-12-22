@@ -38,14 +38,14 @@
     <div class="card">
         <div class="card-header">検索</div>
         <div class="card-body">
-            <form method="GET" action="{{ url('/task') }}">
+            <form method="get" action="{{ url('/task') }}">
                 @csrf
                 <div class="form-group">
                         <label class="form-label" for="startDeadline">締め切り</label>
                         <div>
-                            <input type="datetime-local" class="form-control search-period" id="startDeadline">
+                            <input type="datetime-local" class="form-control search-period" id="startDeadline" name="startDeadline">
                             <span>~</span>
-                            <input type="datetime-local" class="form-control search-period" id="endDeadline">
+                            <input type="datetime-local" class="form-control search-period" id="endDeadline" name="endDeadline">
                         </div>
 
                     <button type="submit" class="btn btn-primary mt-2">検索</button>
