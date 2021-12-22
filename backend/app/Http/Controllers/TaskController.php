@@ -43,12 +43,21 @@ class TaskController extends Controller
 
     public function search(Request $request) {
         $task = new Task();
-        $searched_task = $task->where([
-            ['deadline', '>=', $request->startDeadline],
-            ['deadline', '<=', $request->endDeadline]
-        ]);
+        // //TODO: whereInメソッドで短くかけるかもしれない
+        // if(!is_null($request->completed) && !is_null($request->notCompleted)){
+        // }elseif(!is_null($request->completed)){
+        //     $task = $task->where(['is_completed', '=', true]);
+        // }elseif(!is_null($request->notCompleted)){
+        //     $task = $task->where(['is_completed', '=', false]);
+        // }else{
+        //     return view('tasks', ['current_time' => new DateTime()]);
+        // }
+
+        $task = $task->whereDate('deadline', '>=', $request->startDeadline);
+        $task = $task->whereDate('deadline', '<=', $request->endDeadline);
+
         return view('tasks', [
-            'tasks' => $searched_task->paginate(10),
+            'tasks' => $task->paginate(10),
             'current_time' => new DateTime()
         ]);
     }

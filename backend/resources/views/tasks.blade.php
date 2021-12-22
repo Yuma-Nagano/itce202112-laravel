@@ -41,29 +41,21 @@
             <form method="get" action="{{ url('/task') }}">
                 @csrf
                 <div class="form-group">
-                        <div class="form-check form-check-inline">
-                            <input type="checkbox" class="form-check-input" id="notCompleted" name="notCompleted" value="notCompleted" checked>
-                            <label class="form-check-label" for="notCompleted">未完了</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input type="checkbox" class="form-check-input" id="completed" name="completed" value="completed">
-                            <label class="form-check-label" for="completed">完了</label>
-                        </div>
+                    <div class="form-check form-check-inline">
+                        <input type="checkbox" class="form-check-input" id="notCompleted" name="notCompleted" value="0" checked>
+                        <label class="form-check-label" for="notCompleted">未完了</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input type="checkbox" class="form-check-input" id="completed" name="completed" value="1">
+                        <label class="form-check-label" for="completed">完了</label>
+                    </div>
 
-                        <div>
-                            <label class="form-label" for="startDeadline">締め切り</label>
-                            <input type="datetime-local" class="form-control" id="startDeadline" name="startDeadline">
-                            <span>~</span>
-                            <input type="datetime-local" class="form-control" id="endDeadline" name="endDeadline">
-                        </div>
-
-                        <div>
-                            <label class="form-label" for="startCreateDate">作成日時</label>
-                            <input type="datetime-local" class="form-control" id="startCreateDate" name="startCreateDate">
-                            <span>~</span>
-                            <input type="datetime-local" class="form-control" id="endCreateDate" name="endCreateDate">
-                        </div>
-
+                    <div>
+                        <label class="form-label" for="startDeadline">締め切り</label>
+                        <input type="datetime-local" class="form-control" id="startDeadline" name="startDeadline">
+                        <span>~</span>
+                        <input type="datetime-local" class="form-control" id="endDeadline" name="endDeadline">
+                    </div>
                     <button type="submit" class="btn btn-primary mt-2">検索</button>
                 </div>
             </form>
