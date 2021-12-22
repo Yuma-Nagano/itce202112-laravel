@@ -43,22 +43,24 @@ class TaskController extends Controller
 
     public function search(Request $request) {
         $task = new Task();
-        // //TODO: whereInメソッドで短くかけるかもしれない
-        // if(!is_null($request->completed) && !is_null($request->notCompleted)){
-        // }elseif(!is_null($request->completed)){
-        //     $task = $task->where(['is_completed', '=', true]);
-        // }elseif(!is_null($request->notCompleted)){
-        //     $task = $task->where(['is_completed', '=', false]);
-        // }else{
-        //     return view('tasks', ['current_time' => new DateTime()]);
-        // }
+        //TODO: whereInメソッドで短くかけるかもしれない
+        if(!is_null($request->completed) && !is_null($request->notCompleted)){
+        }elseif(!is_null($request->completed)){
+            $task = $task->where('is_completed', '=', true);
+        }elseif(!is_null($request->notCompleted)){
+            $task = $task->where('is_completed', '=', false) ;
+        }
 
-        $task = $task->whereDate('deadline', '>=', $request->startDeadline);
-        $task = $task->whereDate('deadline', '<=', $request->endDeadline);
+        if(!is_null($request->startDeadline)){
+            $task = $task->where('deadline', '>=', $request->startDeadline);
+        }
 
+        if(!is_null($request->endDeadline)){
+            $task = $task->where('deadline', '<=', $request->endDeadline);
+        }
         return view('tasks', [
             'tasks' => $task->paginate(10),
-            'current_time' => new DateTime()
+            'current_time' => new DateTime(),
         ]);
     }
 
