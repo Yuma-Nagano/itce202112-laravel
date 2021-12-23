@@ -61,7 +61,7 @@
                         <label class="form-label" for="freeWord">フリーワード</label>
                         <input type="text" class="form-control" id="freeWord" name="freeWord">
                     </div>
-                    
+
                     <button type="submit" class="btn btn-primary mt-2">検索</button>
                 </div>
             </form>
@@ -75,9 +75,9 @@
        <table class="table">
          <tbody>
              <tr>
-                 <th>タスクの状態</th>
+                 <th>状態</th>
                  <th>完了状態変更</th>
-                 <th>タスク名</th>
+                 <th>名前</th>
                  <th>締め切り</th>
                  <th>作成日時</th>
                  <th></th> <!-- 削除ボタン -->
