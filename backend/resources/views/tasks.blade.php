@@ -17,14 +17,14 @@
        <form method="POST" action="{{ url('/task') }}">
          @csrf
          <div class="form-group">
-           <p>タスク名</p>
+           <p>名前</p>
            <input type="text" name="name" class="form-control"  value="{{ old('name') }}">
            @if ($errors->has('name'))
            <p class="text-danger">{{ $errors->first('name') }}</p>
            @endif
 
            <p>締切</p>
-           <input type="date" name="deadline" class="form-control"  value="{{ old('deadline') }}">
+           <input type="datetime-local" name="deadline" class="form-control"  value="{{ old('deadline') }}">
            @if ($errors->has('deadline'))
            <p class="text-danger">{{ $errors->first('deadline') }}</p>
            @endif
@@ -75,6 +75,7 @@
        <table class="table">
          <tbody>
              <tr>
+                 <th>編集</th>
                  <th>状態</th>
                  <th>完了状態変更</th>
                  <th>名前</th>
@@ -86,6 +87,12 @@
            <!-- {{ $date_diff = intval($current_time->diff(new DateTime($task->deadline))->format('%R%a')) }} -->
            <!-- {{ $deadline_state = 0 > $date_diff ? 'danger' : ( 3 > $date_diff ? 'warning' : '' ) }} -->
            <tr class="{{ $deadline_state === 'danger' ? 'table-danger' :  ( $deadline_state === 'warning' ? 'table-warning' : '' ) }}">
+            <td>
+                <form method="get" action="{{ url('/edit/' . $task->id) }}">
+                @csrf
+                    <button type="submit" class="btn btn-success w-75">編集</button>
+                </form>
+            </td>
             <td>{{ $task->is_completed ? '完了' : '未完了' }}</td>
             <td>
                 <form method="POST" action="{{ url('/complete/' . $task->id) }}">
