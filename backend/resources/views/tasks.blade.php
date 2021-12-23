@@ -6,6 +6,7 @@
  <title>Basic Tasks</title>
  <!-- <link type="text/css" rel="stylesheet" href="{{ asset('css/app.css') }}"> -->
  <link type="text/css" rel="stylesheet" href="{{ mix('css/app.css') }}">
+ <link type="text/css" rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
 <body>
  <div class="container">
@@ -16,14 +17,14 @@
        <form method="POST" action="{{ url('/task') }}">
          @csrf
          <div class="form-group">
-           <p>タスク名</p>
-           <input type="text" name="name" class="form-control">
+           <p>名前</p>
+           <input type="text" name="name" class="form-control"  value="{{ old('name') }}">
            @if ($errors->has('name'))
            <p class="text-danger">{{ $errors->first('name') }}</p>
            @endif
 
            <p>締切</p>
-           <input type="date" name="deadline" class="form-control">
+           <input type="datetime-local" name="deadline" class="form-control"  value="{{ old('deadline') }}">
            @if ($errors->has('deadline'))
            <p class="text-danger">{{ $errors->first('deadline') }}</p>
            @endif
@@ -33,10 +34,45 @@
        </form>
      </div>
    </div>
+
+    <div class="card mb-3">
+        <div class="card-header">検索</div>
+        <div class="card-body">
+            <form method="get" action="{{ url('/task') }}">
+                @csrf
+                <div class="form-group">
+                    <div class="form-check form-check-inline">
+                        <input type="checkbox" class="form-check-input" id="notCompleted" name="notCompleted" value="0" checked>
+                        <label class="form-check-label" for="notCompleted">未完了</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input type="checkbox" class="form-check-input" id="completed" name="completed" value="1">
+                        <label class="form-check-label" for="completed">完了</label>
+                    </div>
+
+                    <div>
+                        <label class="form-label" for="startDeadline">締め切り</label>
+                        <input type="datetime-local" class="form-control" id="startDeadline" name="startDeadline">
+                        <span>~</span>
+                        <input type="datetime-local" class="form-control" id="endDeadline" name="endDeadline">
+                    </div>
+
+                    <div>
+                        <label class="form-label" for="freeWord">フリーワード</label>
+                        <input type="text" class="form-control" id="freeWord" name="freeWord">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary mt-2">検索</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
    <div class="card">
      <div class="card-header">タスク一覧</div>
      <div class="card-body">
        @if (count($tasks) > 0)
+<<<<<<< HEAD
        <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
                 <li class="page-item {{ !$tasks->hasPages() ? 'disabled' : '' }}">
@@ -53,9 +89,15 @@
             </ul>
         </nav>
        <table class="table table-striped">
+=======
+       <table class="table">
+>>>>>>> develop
          <tbody>
              <tr>
-                 <th>タスク名</th>
+                 <th>編集</th>
+                 <th>状態</th>
+                 <th>完了状態変更</th>
+                 <th>名前</th>
                  <th>締め切り</th>
                  <th>作成日時</th>
                  <th></th> <!-- 削除ボタン -->
@@ -64,9 +106,26 @@
            <!-- {{ $date_diff = intval($current_time->diff(new DateTime($task->deadline))->format('%R%a')) }} -->
            <!-- {{ $deadline_state = 0 > $date_diff ? 'danger' : ( 3 > $date_diff ? 'warning' : '' ) }} -->
            <tr class="{{ $deadline_state === 'danger' ? 'table-danger' :  ( $deadline_state === 'warning' ? 'table-warning' : '' ) }}">
+            <td>
+                <form method="get" action="{{ url('/edit/' . $task->id) }}">
+                @csrf
+                    <button type="submit" class="btn btn-success w-75">編集</button>
+                </form>
+            </td>
+            <td>{{ $task->is_completed ? '完了' : '未完了' }}</td>
+            <td>
+                <form method="POST" action="{{ url('/complete/' . $task->id) }}">
+                @csrf
+                @if(!$task->is_completed)
+                    <button type="submit" class="btn btn-success w-75">完了に変更</button>
+                @else
+                    <button type="submit" class="btn btn-secondary w-75">未完了に変更</button>
+                @endif
+                </form>
+            </td>
             <td>{{ $task->name }}</td>
-             <td>{{ $task->deadline }}</td>
-             <td>{{ $task->created_at }}</td>
+            <td>{{ $task->deadline }}</td>
+            <td>{{ $task->created_at }}</td>
 
              <td>
                <form method="POST" action="{{ url('/task/' . $task->id) }}">

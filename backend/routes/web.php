@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Models\Task;
 use Illuminate\Http\Request;
+use App\Http\Controllers\TaskController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,35 +16,16 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/', function () {
-    return view('tasks', [
-       'tasks' => Task::paginate(10),
-       'current_time' => new DateTime(),
-   ]);
-});
+Route::get('/', [TaskController::class, 'index']);
 
-Route::post('/task', function (Request $request) {
-   request()->validate(
-       [
-           'name' => 'required|unique:tasks|min:3|max:255',
-           'deadline' => 'required'
-       ],
-       [
-           'name.required' => 'タスク内容を入力してください。',
-           'name.unique' => 'そのタスクは既に追加されています。',
-           'name.min' => '3文字以上で入力してください。',
-           'name.max' => '255文字以内で入力してください。',
-           'deadline.required' => '締め切りを入力してください。'
-       ]
-   );
-   $task = new Task();
-   $task->name = request('name');
-   $task->deadline = request('deadline');
-   $task->save();
-   return redirect('/');
-});
+Route::post('/task', [TaskController::class, 'create']);
 
-Route::delete('/task/{task}', function (Task $task) {
-   $task->delete();
-   return redirect('/');
-});
+Route::get('/task', [TaskController::class, 'search']);
+
+Route::delete('/task/{id}', [TaskController::class, 'delete']);
+
+Route::post('/complete/{id}', [TaskController::class, 'toggleTaskCompletion']);
+
+Route::get('/edit/{id}', [TaskController::class, 'edit']);
+
+Route::post('/update', [TaskController::class, 'update']);
