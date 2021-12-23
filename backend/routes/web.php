@@ -25,3 +25,7 @@ Route::get('/task', [TaskController::class, 'search']);
 Route::delete('/task/{id}', [TaskController::class, 'delete']);
 
 Route::post('/complete/{id}', [TaskController::class, 'toggleTaskCompletion']);
+
+Route::get('/edit/{id}', [TaskController::class, 'edit']);
+
+Route::post('/update', [TaskController::class, 'update']);

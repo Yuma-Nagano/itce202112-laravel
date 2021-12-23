@@ -86,4 +86,39 @@ class TaskController extends Controller
         return redirect('/');
     }
 
+    public function edit($id){
+        $task = Task::find($id);
+        return view('edit', [
+            'task' => $task,
+        ]);
+    }
+
+    public function update(){
+        request()->validate(
+            [
+                'name' => 'required|unique:tasks|min:3|max:255',
+                'deadline' => 'required'
+            ],
+            [
+                'name.required' => 'タスク内容を入力してください。',
+                'name.unique' => 'そのタスクは既に追加されています。',
+                'name.min' => '3文字以上で入力してください。',
+                'name.max' => '255文字以内で入力してください。',
+                'deadline.required' => '締め切りを入力してください。'
+            ]
+        );
+        $task = Task::find(request('id'));
+        $task->name = request('name');
+        $task->deadline = request('deadline');
+
+        if(!is_null(request('name'))){
+            $task->update(['name' => request('name')]);
+        }
+
+        if(!is_null(request('deadline'))){
+            $task->update(['deadline' => request('deadline')]);
+        }
+        return redirect('/');
+    }
+
 }
