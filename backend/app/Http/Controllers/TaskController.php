@@ -13,7 +13,7 @@ class TaskController extends Controller
     public function index()
     {
         return view('tasks', [
-            'tasks' => Task::paginate(10),
+            'tasks' => Task::where('is_completed', '=', false)->paginate(10),
             'current_time' => new DateTime()
         ]);
     }
@@ -48,7 +48,7 @@ class TaskController extends Controller
         }elseif(!is_null($request->completed)){
             $task = $task->where('is_completed', '=', true);
         }elseif(!is_null($request->notCompleted)){
-            $task = $task->where('is_completed', '=', false) ;
+            $task = $task->where('is_completed', '=', false);
         }
 
         if(!is_null($request->startDeadline)){
