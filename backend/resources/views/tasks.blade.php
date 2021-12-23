@@ -56,6 +56,12 @@
                         <span>~</span>
                         <input type="datetime-local" class="form-control" id="endDeadline" name="endDeadline">
                     </div>
+
+                    <div>
+                        <label class="form-label" for="freeWord">フリーワード</label>
+                        <input type="text" class="form-control" id="freeWord" name="freeWord">
+                    </div>
+                    
                     <button type="submit" class="btn btn-primary mt-2">検索</button>
                 </div>
             </form>

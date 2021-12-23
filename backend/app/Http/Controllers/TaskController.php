@@ -58,6 +58,11 @@ class TaskController extends Controller
         if(!is_null($request->endDeadline)){
             $task = $task->where('deadline', '<=', $request->endDeadline);
         }
+
+        if(!is_null($request->freeWord)){
+            $task = $task->where('name', 'like', "%{$request->freeWord}%");
+        }
+
         return view('tasks', [
             'tasks' => $task->paginate(10),
             'current_time' => new DateTime(),
