@@ -98,7 +98,7 @@ class TaskController extends Controller
                 'deadline' => 'required'
             ],
             [
-                'name.required' => 'タスク内容を入力してください。',
+                'name.required' => '名前を入力してください。',
                 'name.unique' => 'そのタスクは既に追加されています。',
                 'name.min' => '3文字以上で入力してください。',
                 'name.max' => '255文字以内で入力してください。',
