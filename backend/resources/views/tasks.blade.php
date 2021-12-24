@@ -38,7 +38,7 @@
     <div class="card mb-3">
         <div class="card-header">検索</div>
         <div class="card-body">
-            <form method="get" action="{{ url('/task') }}">
+            <form method="get" action="{{ url('/') }}">
                 @csrf
                 <div class="form-group">
                     <div class="form-check form-check-inline">
@@ -68,7 +68,7 @@
         </div>
     </div>
 
-   <div class="card">
+   <div class="card mb-3">
      <div class="card-header">タスク一覧</div>
      <div class="card-body">
        @if (count($tasks) > 0)
@@ -79,8 +79,8 @@
                  <th>状態</th>
                  <th>完了状態変更</th>
                  <th>名前</th>
-                 <th>締め切り</th>
-                 <th>作成日時</th>
+                 <th>@sortablelink('deadline', '締め切り')</th>
+                 <th>@sortablelink('created_at', '作成日時')</th>
                  <th></th> <!-- 削除ボタン -->
                 </tr>
            @foreach ($tasks as $task)

@@ -10,10 +10,38 @@ use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
-    public function index()
+    protected $tasks;
+
+    public function __construct(Task $tasks)
     {
+        $this->tasks = $tasks;
+    }
+
+    public function index(Request $request)
+    {
+        $task = $this->tasks;
+        //TODO: whereInメソッドで短くかけるかもしれない
+        if(!is_null($request->completed) && !is_null($request->notCompleted)){
+        }elseif(!is_null($request->completed)){
+            $task = $task->where('is_completed', '=', true);
+        }elseif(!is_null($request->notCompleted) || (is_null($request->completed) && is_null($request->notCompleted))){
+            $task = $task->where('is_completed', '=', false);
+        }
+
+        if(!is_null($request->startDeadline)){
+            $task = $task->where('deadline', '>=', $request->startDeadline);
+        }
+
+        if(!is_null($request->endDeadline)){
+            $task = $task->where('deadline', '<=', $request->endDeadline);
+        }
+
+        if(!is_null($request->freeWord)){
+            $task = $task->where('name', 'like', "%{$request->freeWord}%");
+        }
+
         return view('tasks', [
-            'tasks' => Task::where('is_completed', '=', false)->paginate(10),
+            'tasks' => $task->sortable()->paginate(10),
             'current_time' => new DateTime()
         ]);
     }
@@ -41,43 +69,13 @@ class TaskController extends Controller
         return redirect('/');
     }
 
-    public function search(Request $request) {
-        $task = new Task();
-        //TODO: whereInメソッドで短くかけるかもしれない
-        if(!is_null($request->completed) && !is_null($request->notCompleted)){
-        }elseif(!is_null($request->completed)){
-            $task = $task->where('is_completed', '=', true);
-        }elseif(!is_null($request->notCompleted)){
-            $task = $task->where('is_completed', '=', false);
-        }
-
-        if(!is_null($request->startDeadline)){
-            $task = $task->where('deadline', '>=', $request->startDeadline);
-        }
-
-        if(!is_null($request->endDeadline)){
-            $task = $task->where('deadline', '<=', $request->endDeadline);
-        }
-
-        if(!is_null($request->freeWord)){
-            $task = $task->where('name', 'like', "%{$request->freeWord}%");
-        }
-
-        return view('tasks', [
-            'tasks' => $task->paginate(10),
-            'current_time' => new DateTime(),
-        ]);
-    }
-
     public function delete($id) {
-        $task = new Task();
-        $task->find($id)->delete();
+        $this->tasks->find($id)->delete();
         return redirect('/');
     }
 
     public function toggleTaskCompletion($id){
-        $tasks = new Task();
-        $task = $tasks->find($id);
+        $task = $this->tasks->find($id);
         if($task->is_completed){
             $task->update(['is_completed' => false]);
         }else{
@@ -87,7 +85,7 @@ class TaskController extends Controller
     }
 
     public function edit($id){
-        $task = Task::find($id);
+        $task = $this->tasks->find($id);
         return view('edit', [
             'task' => $task,
         ]);
@@ -107,7 +105,7 @@ class TaskController extends Controller
                 'deadline.required' => '締め切りを入力してください。'
             ]
         );
-        $task = Task::find(request('id'));
+        $task = $this->tasks->find(request('id'));
         $task->name = request('name');
         $task->deadline = request('deadline');
 

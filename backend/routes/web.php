@@ -20,8 +20,6 @@ Route::get('/', [TaskController::class, 'index']);
 
 Route::post('/task', [TaskController::class, 'create']);
 
-Route::get('/task', [TaskController::class, 'search']);
-
 Route::delete('/task/{id}', [TaskController::class, 'delete']);
 
 Route::post('/complete/{id}', [TaskController::class, 'toggleTaskCompletion']);
