@@ -14,7 +14,7 @@
     <div class="card mb-3">
         <div class="card-header">タスク新規追加</div>
         <div class="card-body">
-        <form method="POST" action="{{ url('/task') }}">
+        <form method="POST" action="{{ url('/task/create') }}">
             @csrf
             <div class="form-group">
             <p class="mb-0">名前</p>
@@ -88,7 +88,7 @@
             <tr class="{{ $deadline_state === 'danger' ? 'table-danger' :  ( $deadline_state === 'warning' ? 'table-warning' : '' ) }}">
                 <td>{{ $task->is_completed ? '完了' : '未完了' }}</td>
                 <td>
-                    <form method="POST" action="{{ url('/complete/' . $task->id) }}">
+                    <form method="POST" action="{{ url('/task/complete/' . $task->id) }}">
                     @csrf
                     @if(!$task->is_completed)
                     <button type="submit" class="btn btn-success w-75">完了に変更</button>
@@ -101,13 +101,13 @@
                 <td>{{ $task->deadline }}</td>
                 <td>{{ $task->created_at }}</td>
                 <td>
-                    <form method="get" action="{{ url('/edit/' . $task->id) }}">
+                    <form method="get" action="{{ url('/task/edit/' . $task->id) }}">
                         <button type="submit" class="btn btn-outline-success w-75">編集</button>
                     </form>
                 </td>
 
                 <td>
-                <form method="POST" action="{{ url('/task/' . $task->id) }}">
+                <form method="POST" action="{{ url('/task/delete/' . $task->id) }}">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn btn-outline-danger" style="width: 100px;"><i class="far fa-trash-alt"></i> 削除</button>

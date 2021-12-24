@@ -10,38 +10,39 @@ use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
-    protected $tasks;
+    protected $task;
 
-    public function __construct(Task $tasks)
+    public function __construct(Task $task)
     {
-        $this->tasks = $tasks;
+        $this->task = $task;
     }
 
     public function index(Request $request)
     {
-        $task = $this->tasks;
+        $tasks = $this->task;
         //TODO: whereInメソッドで短くかけるかもしれない
-        if (!is_null($request->completed) && !is_null($request->notCompleted)) {
-        } elseif (!is_null($request->completed)) {
-            $task = $task->where('is_completed', '=', true);
-        } elseif (!is_null($request->notCompleted) || (is_null($request->completed) && is_null($request->notCompleted))) {
-            $task = $task->where('is_completed', '=', false);
+        if (!is_null($request->completed) && is_null($request->notCompleted)) {
+            $tasks = $tasks->where('is_completed', '=', true);
+        } elseif (!is_null($request->notCompleted) && is_null($request->completed)) {
+            $tasks = $tasks->where('is_completed', '=', false);
+        } elseif(is_null($request->notCompleted) && is_null($request->completed)) {
+            $tasks = $tasks->where('is_completed', '=', false);
         }
 
         if (!is_null($request->startDeadline)) {
-            $task = $task->where('deadline', '>=', $request->startDeadline);
+            $tasks = $tasks->where('deadline', '>=', $request->startDeadline);
         }
 
         if (!is_null($request->endDeadline)) {
-            $task = $task->where('deadline', '<=', $request->endDeadline);
+            $tasks = $tasks->where('deadline', '<=', $request->endDeadline);
         }
 
         if (!is_null($request->freeWord)) {
-            $task = $task->where('name', 'like', "%{$request->freeWord}%");
+            $tasks = $tasks->where('name', 'like', "%{$request->freeWord}%");
         }
 
         return view('tasks', [
-            'tasks' => $task->sortable()->paginate(10),
+            'tasks' => $tasks->sortable()->paginate(10),
             'current_time' => new DateTime()
         ]);
     }
@@ -71,13 +72,13 @@ class TaskController extends Controller
 
     public function delete($id)
     {
-        $this->tasks->find($id)->delete();
+        $this->task->find($id)->delete();
         return redirect('/');
     }
 
     public function toggleTaskCompletion($id)
     {
-        $task = $this->tasks->find($id);
+        $task = $this->task->find($id);
         if ($task->is_completed) {
             $task->update(['is_completed' => false]);
         } else {
@@ -88,7 +89,7 @@ class TaskController extends Controller
 
     public function edit($id)
     {
-        $task = $this->tasks->find($id);
+        $task = $this->task->find($id);
         return view('edit', [
             'task' => $task,
         ]);
@@ -109,7 +110,7 @@ class TaskController extends Controller
                 'deadline.required' => '締め切りを入力してください。'
             ]
         );
-        $task = $this->tasks->find(request('id'));
+        $task = $this->task->find(request('id'));
         $task->name = request('name');
         $task->deadline = request('deadline');
 

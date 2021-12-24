@@ -14,7 +14,7 @@
     <div class="card mb-3">
         <div class="card-header">タスク編集</div>
         <div class="card-body">
-            <form method="POST" action="{{ url('/update') }}">
+            <form method="POST" action="{{ url('/task/update') }}">
                 @csrf
                 <div class="form-group">
                     <p>名前: {{ $task->name }}</p>
