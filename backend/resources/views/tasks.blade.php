@@ -79,8 +79,8 @@
                  <th>状態</th>
                  <th>完了状態変更</th>
                  <th>名前</th>
-                 <th><a href="/order?order=deadline">締め切り</a></th>
-                 <th><a href="/order?order=created_at">作成日時</a></th>
+                 <th>締め切り</th>
+                 <th>作成日時</th>
                  <th></th> <!-- 削除ボタン -->
                 </tr>
            @foreach ($tasks as $task)
