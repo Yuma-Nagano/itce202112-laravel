@@ -39,7 +39,6 @@
         <div class="card-header">検索</div>
         <div class="card-body">
             <form method="get" action="{{ url('/') }}">
-                @csrf
                 <div class="form-group">
                     <div class="form-check form-check-inline">
                         <input type="checkbox" class="form-check-input" id="notCompleted" name="notCompleted" value="0" checked>
@@ -103,7 +102,6 @@
                 <td>{{ $task->created_at }}</td>
                 <td>
                     <form method="get" action="{{ url('/edit/' . $task->id) }}">
-                    @csrf
                         <button type="submit" class="btn btn-outline-success w-75">編集</button>
                     </form>
                 </td>
