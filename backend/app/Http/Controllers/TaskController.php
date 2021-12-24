@@ -72,13 +72,13 @@ class TaskController extends Controller
 
     public function delete($id)
     {
-        $this->tasks->find($id)->delete();
+        $this->task->find($id)->delete();
         return redirect('/');
     }
 
     public function toggleTaskCompletion($id)
     {
-        $task = $this->tasks->find($id);
+        $task = $this->task->find($id);
         if ($task->is_completed) {
             $task->update(['is_completed' => false]);
         } else {
@@ -89,7 +89,7 @@ class TaskController extends Controller
 
     public function edit($id)
     {
-        $task = $this->tasks->find($id);
+        $task = $this->task->find($id);
         return view('edit', [
             'task' => $task,
         ]);
@@ -110,7 +110,7 @@ class TaskController extends Controller
                 'deadline.required' => '締め切りを入力してください。'
             ]
         );
-        $task = $this->tasks->find(request('id'));
+        $task = $this->task->find(request('id'));
         $task->name = request('name');
         $task->deadline = request('deadline');
 
