@@ -13,25 +13,26 @@
     <h3 class="my-3">タスク管理ツール</h3>
     <div class="card mb-3">
         <div class="card-header">タスク新規追加</div>
-        <div class="card-body">
-        <form method="POST" action="{{ url('/task/create') }}">
-            @csrf
-            <div class="form-group">
-            <p class="mb-0">名前</p>
-            <input type="text" name="name" class="form-control"  value="{{ old('name') }}">
-            @if ($errors->has('name'))
-            <p class="text-danger">{{ $errors->first('name') }}</p>
-            @endif
+            <div class="card-body">
+                <form method="POST" action="{{ url('/task/create') }}">
+                    @csrf
+                    <div class="form-group">
+                    <p class="mb-0">名前</p>
+                    <input type="text" name="name" class="form-control"  value="{{ old('name') }}">
+                    @if ($errors->has('name'))
+                    <p class="text-danger">{{ $errors->first('name') }}</p>
+                    @endif
 
-            <p class="mt-3 mb-0">締切</p>
-            <input type="datetime-local" name="deadline" class="form-control"  value="{{ old('deadline') }}">
-            @if ($errors->has('deadline'))
-            <p class="text-danger">{{ $errors->first('deadline') }}</p>
-            @endif
-
-            <button type="submit" class="btn btn-outline-info mt-2"><i class="fas fa-plus fa-lg mr-2"></i>追加</button>
+                    <p class="mt-3 mb-0">締切</p>
+                    <input type="datetime-local" name="deadline" class="form-control"  value="{{ old('deadline') }}">
+                    @if ($errors->has('deadline'))
+                    <p class="text-danger">{{ $errors->first('deadline') }}</p>
+                    @endif
+                    <div class="text-end mt-3">
+                        <button type="submit" class="btn btn-outline-info"><i class="fas fa-plus fa-lg mr-2"></i>追加</button>
+                    </div>
+                </form>
             </div>
-        </form>
         </div>
     </div>
 
@@ -60,8 +61,9 @@
                         <label class="form-label mt-3 mb-0" for="freeWord">フリーワード</label>
                         <input type="text" class="form-control" id="freeWord" name="freeWord">
                     </div>
-
-                    <button type="submit" class="btn btn-primary mt-3">検索</button>
+                    <div class="text-end mt-3">
+                        <button type="submit" class="btn btn-primary">検索</button>
+                    </div>
                 </div>
             </form>
         </div>
