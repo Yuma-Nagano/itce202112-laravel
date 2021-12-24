@@ -21,22 +21,22 @@ class TaskController extends Controller
     {
         $task = $this->tasks;
         //TODO: whereInメソッドで短くかけるかもしれない
-        if(!is_null($request->completed) && !is_null($request->notCompleted)){
-        }elseif(!is_null($request->completed)){
+        if (!is_null($request->completed) && !is_null($request->notCompleted)) {
+        } elseif (!is_null($request->completed)) {
             $task = $task->where('is_completed', '=', true);
-        }elseif(!is_null($request->notCompleted) || (is_null($request->completed) && is_null($request->notCompleted))){
+        } elseif (!is_null($request->notCompleted) || (is_null($request->completed) && is_null($request->notCompleted))) {
             $task = $task->where('is_completed', '=', false);
         }
 
-        if(!is_null($request->startDeadline)){
+        if (!is_null($request->startDeadline)) {
             $task = $task->where('deadline', '>=', $request->startDeadline);
         }
 
-        if(!is_null($request->endDeadline)){
+        if (!is_null($request->endDeadline)) {
             $task = $task->where('deadline', '<=', $request->endDeadline);
         }
 
-        if(!is_null($request->freeWord)){
+        if (!is_null($request->freeWord)) {
             $task = $task->where('name', 'like', "%{$request->freeWord}%");
         }
 
@@ -69,29 +69,33 @@ class TaskController extends Controller
         return redirect('/');
     }
 
-    public function delete($id) {
+    public function delete($id)
+    {
         $this->tasks->find($id)->delete();
         return redirect('/');
     }
 
-    public function toggleTaskCompletion($id){
+    public function toggleTaskCompletion($id)
+    {
         $task = $this->tasks->find($id);
-        if($task->is_completed){
+        if ($task->is_completed) {
             $task->update(['is_completed' => false]);
-        }else{
+        } else {
             $task->update(['is_completed' => true]);
         }
         return redirect('/');
     }
 
-    public function edit($id){
+    public function edit($id)
+    {
         $task = $this->tasks->find($id);
         return view('edit', [
             'task' => $task,
         ]);
     }
 
-    public function update(){
+    public function update()
+    {
         request()->validate(
             [
                 'name' => 'required|unique:tasks|min:3|max:255',
@@ -109,14 +113,13 @@ class TaskController extends Controller
         $task->name = request('name');
         $task->deadline = request('deadline');
 
-        if(!is_null(request('name'))){
+        if (!is_null(request('name'))) {
             $task->update(['name' => request('name')]);
         }
 
-        if(!is_null(request('deadline'))){
+        if (!is_null(request('deadline'))) {
             $task->update(['deadline' => request('deadline')]);
         }
         return redirect('/');
     }
-
 }
