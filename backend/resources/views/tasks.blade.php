@@ -68,7 +68,7 @@
         </div>
     </div>
 
-   <div class="card">
+   <div class="card mb-3">
      <div class="card-header">タスク一覧</div>
      <div class="card-body">
        @if (count($tasks) > 0)
