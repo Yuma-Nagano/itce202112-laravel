@@ -9,7 +9,7 @@
     <link type="text/css" rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
 <body>
-    <div class="container">
+<div class="container">
     <h3 class="my-3">タスク管理ツール</h3>
     <div class="card mb-3">
         <div class="card-header">タスク新規追加</div>
@@ -136,5 +136,6 @@
         </nav>
         @endif
     </div>
+</div>
 </body>
 </html>
