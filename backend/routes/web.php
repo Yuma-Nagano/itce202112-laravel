@@ -18,12 +18,12 @@ use App\Http\Controllers\TaskController;
 
 Route::get('/', [TaskController::class, 'index']);
 
-Route::post('/task', [TaskController::class, 'create']);
+Route::post('/task/create', [TaskController::class, 'create']);
 
-Route::delete('/task/{id}', [TaskController::class, 'delete']);
+Route::delete('/task/delete/{id}', [TaskController::class, 'delete']);
 
-Route::post('/complete/{id}', [TaskController::class, 'toggleTaskCompletion']);
+Route::post('/task/complete/{id}', [TaskController::class, 'toggleTaskCompletion']);
 
-Route::get('/edit/{id}', [TaskController::class, 'edit']);
+Route::get('/task/edit/{id}', [TaskController::class, 'edit']);
 
-Route::post('/update', [TaskController::class, 'update']);
+Route::post('/task/update', [TaskController::class, 'update']);
