@@ -24,9 +24,9 @@
                     @endif
 
                     <p class="mt-3 mb-0">締切</p>
-                    <input type="datetime-local" name="deadline" class="form-control"  value="{{ old('deadline') }}">
-                    @if ($errors->has('deadline'))
-                    <p class="text-danger">{{ $errors->first('deadline') }}</p>
+                    <input type="datetime-local" name="deadline_date_time" class="form-control"  value="{{ old('deadline_date_time') }}">
+                    @if ($errors->has('deadline_date_time'))
+                    <p class="text-danger">{{ $errors->first('deadline_date_time') }}</p>
                     @endif
                     <div class="text-end mt-3">
                         <button type="submit" class="btn btn-outline-info"><i class="fas fa-plus fa-lg mr-2"></i>追加</button>
@@ -79,16 +79,16 @@
                     <th>状態</th>
                     <th>完了状態変更</th>
                     <th>名前</th>
-                    <th>@sortablelink('deadline', '締め切り')</th>
+                    <th>@sortablelink('deadline_date_time', '締め切り')</th>
                     <th>@sortablelink('created_at', '作成日時')</th>
                     <th></th> <!-- 編集ボタン -->
                     <th></th> <!-- 削除ボタン -->
                 </tr>
             @foreach ($tasks as $task)
-            <!-- {{ $date_diff = intval($current_time->diff(new DateTime($task->deadline))->format('%R%a')) }} -->
+            <!-- {{ $date_diff = intval($current_time->diff(new DateTime($task->deadline_date_time))->format('%R%a')) }} -->
             <!-- {{ $deadline_state = 0 > $date_diff ? 'danger' : ( 3 > $date_diff ? 'warning' : '' ) }} -->
             <tr class="{{ $deadline_state === 'danger' ? 'table-danger' :  ( $deadline_state === 'warning' ? 'table-warning' : '' ) }}">
-                <td>{{ $task->is_completed ? '完了' : '未完了' }}</td>
+                <td class="my-auto">{{ $task->is_completed ? '完了' : '未完了' }}</td>
                 <td>
                     <form method="POST" action="{{ url('/task/complete/' . $task->id) }}">
                     @csrf
@@ -100,7 +100,7 @@
                     </form>
                 </td>
                 <td>{{ $task->name }}</td>
-                <td>{{ $task->deadline }}</td>
+                <td>{{ $task->deadline_date_time }}</td>
                 <td>{{ $task->created_at }}</td>
                 <td>
                     <form method="get" action="{{ url('/task/edit/' . $task->id) }}">

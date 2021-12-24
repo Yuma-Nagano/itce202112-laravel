@@ -24,11 +24,11 @@
                     <p class="text-danger">{{ $errors->first('name') }}</p>
                     @endif
 
-                    <p>締切: {{ $task->deadline }}</p>
-                    <input type="datetime-local" name="deadline" class="form-control"
-                    value="{{ is_null(old('deadline')) ? date('Y-m-d\TH:i', strtotime($task->deadline)) : old('deadline') }}">
-                    @if ($errors->has('deadline'))
-                    <p class="text-danger">{{ $errors->first('deadline') }}</p>
+                    <p>締切: {{ $task->deadline_date_time }}</p>
+                    <input type="datetime-local" name="deadline_date_time" class="form-control"
+                    value="{{ is_null(old('deadline_date_time')) ? date('Y-m-d\TH:i', strtotime($task->deadline_date_time)) : old('deadline_date_time') }}">
+                    @if ($errors->has('deadline_date_time'))
+                    <p class="text-danger">{{ $errors->first('deadline_date_time') }}</p>
                     @endif
 
                     <input type="hidden" name="id" value="{{ $task->id }}">

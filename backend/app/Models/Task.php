@@ -10,6 +10,6 @@ class Task extends Model
 {
     use HasFactory;
     use Sortable;
-    protected $fillable = ['name', 'deadline', 'is_completed'];
-    public $sortable = ['deadline', 'created_at'];
+    protected $fillable = ['name', 'deadline_date_time', 'is_completed'];
+    public $sortable = ['deadline_date_time', 'created_at'];
 }

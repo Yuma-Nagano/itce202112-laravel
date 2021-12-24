@@ -30,11 +30,11 @@ class TaskController extends Controller
         }
 
         if (!is_null($request->startDeadline)) {
-            $tasks = $tasks->where('deadline', '>=', $request->startDeadline);
+            $tasks = $tasks->where('deadline_date_time', '>=', $request->startDeadline);
         }
 
         if (!is_null($request->endDeadline)) {
-            $tasks = $tasks->where('deadline', '<=', $request->endDeadline);
+            $tasks = $tasks->where('deadline_date_time', '<=', $request->endDeadline);
         }
 
         if (!is_null($request->freeWord)) {
@@ -52,19 +52,19 @@ class TaskController extends Controller
         request()->validate(
             [
                 'name' => 'required|unique:tasks|min:3|max:255',
-                'deadline' => 'required'
+                'deadline_date_time' => 'required'
             ],
             [
                 'name.required' => 'タスク内容を入力してください。',
                 'name.unique' => 'そのタスクは既に追加されています。',
                 'name.min' => '3文字以上で入力してください。',
                 'name.max' => '255文字以内で入力してください。',
-                'deadline.required' => '締め切りを入力してください。'
+                'deadline_date_time.required' => '締め切りを入力してください。'
             ]
         );
         $task = new Task();
         $task->name = request('name');
-        $task->deadline = request('deadline');
+        $task->deadline_date_time = request('deadline_date_time');
         $task->is_completed = false;
         $task->save();
         return redirect('/');
@@ -100,26 +100,26 @@ class TaskController extends Controller
         request()->validate(
             [
                 'name' => 'required|unique:tasks|min:3|max:255',
-                'deadline' => 'required'
+                'deadline_date_time' => 'required'
             ],
             [
                 'name.required' => '名前を入力してください。',
                 'name.unique' => 'そのタスクは既に追加されています。',
                 'name.min' => '3文字以上で入力してください。',
                 'name.max' => '255文字以内で入力してください。',
-                'deadline.required' => '締め切りを入力してください。'
+                'deadline_date_time.required' => '締め切りを入力してください。'
             ]
         );
         $task = $this->task->find(request('id'));
         $task->name = request('name');
-        $task->deadline = request('deadline');
+        $task->deadline_date_time_date_time = request('deadline_date_time');
 
         if (!is_null(request('name'))) {
             $task->update(['name' => request('name')]);
         }
 
-        if (!is_null(request('deadline'))) {
-            $task->update(['deadline' => request('deadline')]);
+        if (!is_null(request('deadline_date_time'))) {
+            $task->update(['deadline_date_time' => request('deadline_date_time')]);
         }
         return redirect('/');
     }
