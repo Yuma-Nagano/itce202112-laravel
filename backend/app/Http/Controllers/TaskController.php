@@ -20,11 +20,9 @@ class TaskController extends Controller
     public function index(Request $request)
     {
         $tasks = $this->task;
-        //TODO: whereInメソッドで短くかけるかもしれない
-        if (!is_null($request->completed) && !is_null($request->notCompleted)) {
-        } elseif (!is_null($request->completed)) {
+        if (!is_null($request->completed)) {
             $tasks = $tasks->where('is_completed', '=', true);
-        } elseif (!is_null($request->notCompleted) || (is_null($request->completed) && is_null($request->notCompleted))) {
+        } elseif (!is_null($request->notCompleted)) {
             $tasks = $tasks->where('is_completed', '=', false);
         }
 
