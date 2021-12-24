@@ -17,10 +17,31 @@ class TaskController extends Controller
         $this->tasks = $tasks;
     }
 
-    public function index()
+    public function index(Request $request)
     {
+        $task = $this->tasks;
+        //TODO: whereInメソッドで短くかけるかもしれない
+        if(!is_null($request->completed) && !is_null($request->notCompleted)){
+        }elseif(!is_null($request->completed)){
+            $task = $task->where('is_completed', '=', true);
+        }elseif(!is_null($request->notCompleted) || (is_null($request->completed) && is_null($request->notCompleted))){
+            $task = $task->where('is_completed', '=', false);
+        }
+
+        if(!is_null($request->startDeadline)){
+            $task = $task->where('deadline', '>=', $request->startDeadline);
+        }
+
+        if(!is_null($request->endDeadline)){
+            $task = $task->where('deadline', '<=', $request->endDeadline);
+        }
+
+        if(!is_null($request->freeWord)){
+            $task = $task->where('name', 'like', "%{$request->freeWord}%");
+        }
+
         return view('tasks', [
-            'tasks' => $this->tasks->where('is_completed', '=', false)->paginate(10),
+            'tasks' => $task->paginate(10),
             'current_time' => new DateTime()
         ]);
     }
@@ -46,34 +67,6 @@ class TaskController extends Controller
         $task->is_completed = false;
         $task->save();
         return redirect('/');
-    }
-
-    public function search(Request $request) {
-        $task = $this->tasks;
-        //TODO: whereInメソッドで短くかけるかもしれない
-        if(!is_null($request->completed) && !is_null($request->notCompleted)){
-        }elseif(!is_null($request->completed)){
-            $task = $task->where('is_completed', '=', true);
-        }elseif(!is_null($request->notCompleted)){
-            $task = $task->where('is_completed', '=', false);
-        }
-
-        if(!is_null($request->startDeadline)){
-            $task = $task->where('deadline', '>=', $request->startDeadline);
-        }
-
-        if(!is_null($request->endDeadline)){
-            $task = $task->where('deadline', '<=', $request->endDeadline);
-        }
-
-        if(!is_null($request->freeWord)){
-            $task = $task->where('name', 'like', "%{$request->freeWord}%");
-        }
-
-        return view('tasks', [
-            'tasks' => $task->paginate(10),
-            'current_time' => new DateTime(),
-        ]);
     }
 
     public function delete($id) {

@@ -38,7 +38,7 @@
     <div class="card mb-3">
         <div class="card-header">検索</div>
         <div class="card-body">
-            <form method="get" action="{{ url('/task') }}">
+            <form method="get" action="{{ url('/') }}">
                 @csrf
                 <div class="form-group">
                     <div class="form-check form-check-inline">
@@ -79,8 +79,8 @@
                  <th>状態</th>
                  <th>完了状態変更</th>
                  <th>名前</th>
-                 <th>締め切り</th>
-                 <th>作成日時</th>
+                 <th><a href="/order?order=deadline">締め切り</a></th>
+                 <th><a href="/order?order=created_at">作成日時</a></th>
                  <th></th> <!-- 削除ボタン -->
                 </tr>
            @foreach ($tasks as $task)
