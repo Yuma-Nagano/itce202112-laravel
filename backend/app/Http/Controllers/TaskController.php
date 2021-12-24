@@ -41,7 +41,7 @@ class TaskController extends Controller
         }
 
         return view('tasks', [
-            'tasks' => $task->paginate(10),
+            'tasks' => $task->sortable()->paginate(10),
             'current_time' => new DateTime()
         ]);
     }

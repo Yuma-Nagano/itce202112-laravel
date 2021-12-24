@@ -79,8 +79,8 @@
                  <th>状態</th>
                  <th>完了状態変更</th>
                  <th>名前</th>
-                 <th>締め切り</th>
-                 <th>作成日時</th>
+                 <th>@sortablelink('deadline', '締め切り')</th>
+                 <th>@sortablelink('created_at', '作成日時')</th>
                  <th></th> <!-- 削除ボタン -->
                 </tr>
            @foreach ($tasks as $task)
