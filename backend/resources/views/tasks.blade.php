@@ -17,13 +17,13 @@
        <form method="POST" action="{{ url('/task') }}">
          @csrf
          <div class="form-group">
-           <p>名前</p>
+           <p class="mb-0">名前</p>
            <input type="text" name="name" class="form-control"  value="{{ old('name') }}">
            @if ($errors->has('name'))
            <p class="text-danger">{{ $errors->first('name') }}</p>
            @endif
 
-           <p>締切</p>
+           <p class="mt-3 mb-0">締切</p>
            <input type="datetime-local" name="deadline" class="form-control"  value="{{ old('deadline') }}">
            @if ($errors->has('deadline'))
            <p class="text-danger">{{ $errors->first('deadline') }}</p>
@@ -51,18 +51,18 @@
                     </div>
 
                     <div>
-                        <label class="form-label" for="startDeadline">締め切り</label>
+                        <label class="form-label mt-3 mb-0" for="startDeadline">締め切り</label>
                         <input type="datetime-local" class="form-control" id="startDeadline" name="startDeadline">
                         <span>~</span>
                         <input type="datetime-local" class="form-control" id="endDeadline" name="endDeadline">
                     </div>
 
                     <div>
-                        <label class="form-label" for="freeWord">フリーワード</label>
+                        <label class="form-label mt-3 mb-0" for="freeWord">フリーワード</label>
                         <input type="text" class="form-control" id="freeWord" name="freeWord">
                     </div>
 
-                    <button type="submit" class="btn btn-primary mt-2">検索</button>
+                    <button type="submit" class="btn btn-primary mt-3">検索</button>
                 </div>
             </form>
         </div>
@@ -75,24 +75,18 @@
        <table class="table">
          <tbody>
              <tr>
-                 <th>編集</th>
                  <th>状態</th>
                  <th>完了状態変更</th>
                  <th>名前</th>
                  <th>@sortablelink('deadline', '締め切り')</th>
                  <th>@sortablelink('created_at', '作成日時')</th>
+                 <th></th> <!-- 編集ボタン -->
                  <th></th> <!-- 削除ボタン -->
                 </tr>
            @foreach ($tasks as $task)
            <!-- {{ $date_diff = intval($current_time->diff(new DateTime($task->deadline))->format('%R%a')) }} -->
            <!-- {{ $deadline_state = 0 > $date_diff ? 'danger' : ( 3 > $date_diff ? 'warning' : '' ) }} -->
            <tr class="{{ $deadline_state === 'danger' ? 'table-danger' :  ( $deadline_state === 'warning' ? 'table-warning' : '' ) }}">
-            <td>
-                <form method="get" action="{{ url('/edit/' . $task->id) }}">
-                @csrf
-                    <button type="submit" class="btn btn-success w-75">編集</button>
-                </form>
-            </td>
             <td>{{ $task->is_completed ? '完了' : '未完了' }}</td>
             <td>
                 <form method="POST" action="{{ url('/complete/' . $task->id) }}">
@@ -107,6 +101,12 @@
             <td>{{ $task->name }}</td>
             <td>{{ $task->deadline }}</td>
             <td>{{ $task->created_at }}</td>
+            <td>
+                <form method="get" action="{{ url('/edit/' . $task->id) }}">
+                @csrf
+                    <button type="submit" class="btn btn-outline-success w-75">編集</button>
+                </form>
+            </td>
 
              <td>
                <form method="POST" action="{{ url('/task/' . $task->id) }}">
