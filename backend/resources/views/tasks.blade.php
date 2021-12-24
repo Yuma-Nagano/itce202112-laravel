@@ -29,7 +29,7 @@
                     <p class="text-danger">{{ $errors->first('deadline_date_time') }}</p>
                     @endif
                     <div class="text-end mt-3">
-                        <button type="submit" class="btn btn-outline-info"><i class="fas fa-plus fa-lg mr-2"></i>追加</button>
+                        <button type="submit" class="btn btn-outline-info">追加</button>
                     </div>
                 </form>
             </div>
