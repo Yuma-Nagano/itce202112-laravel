@@ -87,8 +87,8 @@
             @foreach ($tasks as $task)
             <!-- {{ $date_diff = intval($current_time->diff(new DateTime($task->deadline_date_time))->format('%R%a')) }} -->
             <!-- {{ $deadline_state = 0 > $date_diff ? 'danger' : ( 3 > $date_diff ? 'warning' : '' ) }} -->
-            <tr class="{{ $deadline_state === 'danger' ? 'table-danger' :  ( $deadline_state === 'warning' ? 'table-warning' : '' ) }}">
-                <td class="my-auto">{{ $task->is_completed ? '完了' : '未完了' }}</td>
+            <tr class="table-row-center {{ $deadline_state === 'danger' ? 'table-danger' :  ( $deadline_state === 'warning' ? 'table-warning' : '' ) }}">
+                <td>{{ $task->is_completed ? '完了' : '未完了' }}</td>
                 <td>
                     <form method="POST" action="{{ url('/task/complete/' . $task->id) }}">
                     @csrf

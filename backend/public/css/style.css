@@ -3,3 +3,8 @@
     display: inline;
     width: auto;
 }
+
+.table-row-center
+{
+    vertical-align: middle;
+}
